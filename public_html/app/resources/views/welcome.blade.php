@@ -4,8 +4,9 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>Laravel</title>
+        <!-- provide the csrf token -->
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
+        <title>Employee</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
@@ -63,6 +64,9 @@
                 margin-bottom: 30px;
             }
         </style>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     </head>
     <body>
         <div class="flex-center position-ref full-height">
@@ -79,17 +83,131 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
                 </div>
+                <div class="row">
+                    <div class="span12">
+                        <div class="" id="loginModal">
+                            <div class="modal-body">
+                                <div class="well">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active"><a href="#login" data-toggle="tab">Employee</a></li>
+                                        <li><a href="#create" data-toggle="tab">Employer</a></li>
+                                    </ul>
+                                    <form class="form-horizontal" action='' method="POST">
+                                    <div id="myTabContent" class="tab-content">
+                                        <div class="tab-pane active in" id="login">
+                                                    <div class="control-group form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                                                        <!-- Username -->
+                                                        <label class="control-label"  for="username">Username/Email</label>
+                                                        <div class="controls">
+                                                            <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+                                                            @if ($errors->has('email'))
+                                                                <span class="help-block">
+                                                                    <strong>{{ $errors->first('email') }}</strong>
+                                                                </span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
 
+                                                    <div class="control-group form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                                                        <!-- Password-->
+                                                        <label class="control-label" for="password">Password</label>
+                                                        <div class="controls">
+                                                            <input id="password" type="password" class="form-control" name="password" required>
+                                                            @if ($errors->has('password'))
+                                                                <span class="help-block">
+                                                                    <strong>{{ $errors->first('password') }}</strong>
+                                                                </span>
+                                                            @endif
+                                                        </div>
+                                                    </div>             
+                                        </div>
+                                        <div class="tab-pane fade" id="create">
+                                            <div class="control-group form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                                                    <!-- Username -->
+                                                    <label class="control-label"  for="username">Username/Email</label>
+                                                    <div class="controls">
+                                                        <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+                                                        @if ($errors->has('email'))
+                                                            <span class="help-block">
+                                                                <strong>{{ $errors->first('email') }}</strong>
+                                                            </span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+
+                                                <div class="control-group form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                                                    <!-- Password-->
+                                                    <label class="control-label" for="password">Password</label>
+                                                    <div class="controls">
+                                                        <input id="password" type="password" class="form-control" name="password" required>
+                                                        @if ($errors->has('password'))
+                                                            <span class="help-block">
+                                                                <strong>{{ $errors->first('password') }}</strong>
+                                                            </span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <div class="controls">
+                                            <button type="submit" class="btn btn-success">Login</button><br/><br/>
+                                            <a href="redirect/google" class="btn btn-warning">Login in with Google</a>
+                                            <a href="redirect/facebook" class="btn btn-warning">Login in with Facebook</a>
+                                        </div>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>	
+                    </div>
+            <div class="col-lg-12">
                 <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    <?php 
+                    use App\JobPosition;
+                    ?>
+                    <form>
+                        <select name="position" class="form-control positionValue" required="required">
+                            <option value="">Select Position..</option>
+                            <?php 
+                             $jobData= JobPosition::all()->toArray();
+                            ?>
+                            @foreach($jobData as $jobDat)
+                                <option value="{{$jobDat['location_id']}}">{{$jobDat['title']}}</option>
+                            @endforeach
+
+                        </select>
+                        <select name="position" class="form-control" required="required">
+                            <option value="">Select Position..</option>
+                        </select>
+                        <select name="position" class="form-control" required="required">
+                            <option value="">Select Position..</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary">Find Jobs</button>
+                    </form>
                 </div>
-            </div>
+            </div>    
         </div>
+            
     </body>
+    <script type="text/javascript">
+        $(document).ready(function(){
+           $('.positionValue').change(function() {
+               var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+               alert(CSRF_TOKEN);
+                    $.ajax({
+                        url: '/social/fetchLocation',
+                        type: 'POST',
+                        dataType : 'json', 
+                        data: { _token:CSRF_TOKEN, location_id: this.value },
+                        success: function(data) {
+                            
+                        }
+                    });
+           });
+           
+        });
+    </script>
 </html>

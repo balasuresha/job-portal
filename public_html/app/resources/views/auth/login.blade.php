@@ -55,6 +55,7 @@
                                     Login
                                 </button>
                                 <a href="redirect/facebook">Login in with Facebook</a>
+                                <a href="redirect/google">Login in with Google</a>
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
                                     Forgot Your Password?
                                 </a>

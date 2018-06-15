@@ -15,6 +15,12 @@
                     @endif
 
                     You are logged in!
+                    @if($service == 'google')
+                    <div class="title m-b-md">
+                        Welcome {{ $details->name}} ! <br>
+                            Your email is : {{ $details->email }} <br>
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>
